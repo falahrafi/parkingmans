@@ -3,6 +3,7 @@
 namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreParkingSlotRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class StoreParkingSlotRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +25,16 @@ class StoreParkingSlotRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'slotNumber' => ['required'],
+            'statusId' => ['required', Rule::in([0,1,2])]
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'slot_number' => $this->slotNumber,
+            'status_id' => $this->statusId
+        ]);
     }
 }

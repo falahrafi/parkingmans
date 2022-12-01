@@ -5,8 +5,12 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 
 use App\Models\ParkingSlot;
+use Illuminate\Http\Request;
 use App\Http\Requests\V1\StoreParkingSlotRequest;
 use App\Http\Requests\V1\UpdateParkingSlotRequest;
+use App\Http\Resources\V1\ParkingSlotCollection;
+use App\Http\Resources\V1\ParkingSlotResource;
+use App\Filters\V1\ParkingSlotFilter;
 
 class ParkingSlotController extends Controller
 {
@@ -15,19 +19,16 @@ class ParkingSlotController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        $filter = new ParkingSlotFilter();
+        $filterItems = $filter->transform($request); // [['column','operator','value']]
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        if (count($filterItems) == 0) {
+            return new ParkingSlotCollection(ParkingSlot::all());
+        } else {
+            return new ParkingSlotCollection(ParkingSlot::where($filterItems)->get());
+        }
     }
 
     /**
@@ -38,7 +39,9 @@ class ParkingSlotController extends Controller
      */
     public function store(StoreParkingSlotRequest $request)
     {
-        //
+        $createData = ParkingSlot::create($request->all());
+
+        return $createData->id;
     }
 
     /**
@@ -49,18 +52,7 @@ class ParkingSlotController extends Controller
      */
     public function show(ParkingSlot $parkingSlot)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ParkingSlot  $parkingSlot
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ParkingSlot $parkingSlot)
-    {
-        //
+        return new ParkingSlotResource($parkingSlot);
     }
 
     /**
@@ -72,7 +64,13 @@ class ParkingSlotController extends Controller
      */
     public function update(UpdateParkingSlotRequest $request, ParkingSlot $parkingSlot)
     {
-        //
+        $parkingSlot->update($request->all());
+
+        if ($parkingSlot->wasChanged()) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     /**
@@ -83,6 +81,12 @@ class ParkingSlotController extends Controller
      */
     public function destroy(ParkingSlot $parkingSlot)
     {
-        //
+        $deleteData = $parkingSlot->delete();
+
+        if ($deleteData) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

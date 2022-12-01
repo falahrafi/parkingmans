@@ -3,6 +3,7 @@
 namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateParkingSlotRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class UpdateParkingSlotRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +24,25 @@ class UpdateParkingSlotRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        $method = $this->method();
+
+        if ($method == "PUT") {
+            return [
+                'slotNumber' => ['required'],
+                'statusId' => ['required', Rule::in([0, 1, 2])]
+            ];
+        } else {
+            // PATCH
+            return [
+                'slotNumber' => ['sometimes', 'required'],
+                'statusId' => ['sometimes','required', Rule::in([0, 1, 2])]
+            ];
+        }
+    }
+
+    protected function prepareForValidation()
+    {
+        if(isset($this->slotNumber)) $this->merge(['slot_number' => $this->slotNumber]);
+        if(isset($this->statusId)) $this->merge(['status_id' => $this->statusId]);
     }
 }
