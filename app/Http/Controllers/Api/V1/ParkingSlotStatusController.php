@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\ParkingSlotStatus;
 use App\Http\Requests\V1\StoreParkingSlotStatusRequest;
 use App\Http\Requests\V1\UpdateParkingSlotStatusRequest;
+use App\Http\Resources\V1\ParkingSlotStatusCollection;
+use App\Http\Resources\V1\ParkingSlotStatusResource;
 
 class ParkingSlotStatusController extends Controller
 {
@@ -17,17 +19,7 @@ class ParkingSlotStatusController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return new ParkingSlotStatusCollection(ParkingSlotStatus::all());
     }
 
     /**
@@ -49,18 +41,7 @@ class ParkingSlotStatusController extends Controller
      */
     public function show(ParkingSlotStatus $parkingSlotStatus)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ParkingSlotStatus  $parkingSlotStatus
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ParkingSlotStatus $parkingSlotStatus)
-    {
-        //
+        return new ParkingSlotStatusResource($parkingSlotStatus);
     }
 
     /**

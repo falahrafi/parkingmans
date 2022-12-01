@@ -23,4 +23,5 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
     Route::apiResource('vehicles', VehicleController::class);
     Route::apiResource('vehicle_owners', VehicleOwnerController::class);
     Route::apiResource('vehicle_categories', VehicleCategoryController::class);
+    Route::apiResource('parking_slot_statuses', ParkingSlotStatusController::class);
 });

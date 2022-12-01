@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 
 use App\Models\VehicleCategory;
-use App\Http\Requests\StoreVehicleCategoryRequest;
-use App\Http\Requests\UpdateVehicleCategoryRequest;
+use App\Http\Requests\V1\StoreVehicleCategoryRequest;
+use App\Http\Requests\V1\UpdateVehicleCategoryRequest;
 use App\Http\Resources\V1\VehicleCategoryResource;
 use App\Http\Resources\V1\VehicleCategoryCollection;
 
