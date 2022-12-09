@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VehicleCategory extends Model
+class PaymentStatus extends Model
 {
     use HasFactory;
 
-    public function vehicles() {
-        return $this->hasMany(Vehicle::class);
-    }    
+    public function payments() {
+        return $this->hasMany(Payment::class, 'status_id');
+    }
 }

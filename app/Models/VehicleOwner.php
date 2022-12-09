@@ -18,7 +18,11 @@ class VehicleOwner extends Model
         'email',
     ];
 
-    public function vehicle() {
-        $this->hasOne(Vehicle::class);
+    public function vehicles() {
+        return $this->hasMany(Vehicle::class);
+    }
+
+    public function bookings() {
+        return $this->hasMany(Booking::class);
     }
 }

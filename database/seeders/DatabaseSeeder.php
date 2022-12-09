@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\ParkingSlotStatus;
+use App\Models\VehicleOwner;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,9 +18,15 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call([
             VehicleCategorySeeder::class,
-            VehicleSeeder::class,
+            VehicleOwnerSeeder::class,
+            // VehicleSeeder::class,
             ParkingSlotStatusSeeder::class,
-            ParkingSlotSeeder::class
+            ParkingSlotSeeder::class,
+            BookingStatusSeeder::class,
+            // BookingSeeder::class,
+            PaymentStatusSeeder::class,
+            PaymentSeeder::class,
+            UserSeeder::class
         ]);
     }
 }

@@ -15,9 +15,19 @@ class VehicleOwnerSeeder extends Seeder
      */
     public function run()
     {
-        // VehicleOwner::factory()
-        //     ->count(15)
-        //     ->hasVehicles(1)
-        //     ->create();
+        VehicleOwner::factory()
+            ->count(15)
+            ->hasVehicles(1)
+            ->create();
+
+        VehicleOwner::factory()
+            ->count(5)
+            ->hasVehicles(2)
+            ->create();
+
+        VehicleOwner::factory()
+            ->count(2)
+            ->hasVehicles(3)
+            ->create();
     }
 }

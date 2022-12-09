@@ -18,10 +18,14 @@ class Vehicle extends Model
     ];
 
     public function vehicleOwner() {
-        $this->belongsTo(VehicleOwner::class);
+        return $this->belongsTo(VehicleOwner::class);
     }
 
     public function vehicleCategory() {
-        $this->belongsTo(VehicleCategory::class);
+        return $this->belongsTo(VehicleCategory::class);
+    }
+
+    public function bookings() {
+        return $this->hasMany(Booking::class);
     }
 }

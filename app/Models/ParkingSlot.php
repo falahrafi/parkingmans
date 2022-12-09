@@ -17,4 +17,8 @@ class ParkingSlot extends Model
     public function parkingSlotStatus() {
         return $this->belongsTo(ParkingSlotStatus::class, 'status_id');
     }
+
+    public function bookings() {
+        return $this->hasMany(Booking::class);
+    }
 }
