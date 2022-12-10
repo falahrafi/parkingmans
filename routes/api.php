@@ -29,4 +29,5 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
     Route::apiResource('payment_statuses', PaymentStatusController::class);
     Route::apiResource('bookings', BookingController::class);
     Route::apiResource('booking_statuses', BookingStatusController::class);
+    Route::apiResource('users', UserController::class);
 });
