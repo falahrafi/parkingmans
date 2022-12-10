@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Filters\V1\BookingFilter;
 use App\Http\Controllers\Controller;
 
 use App\Models\Booking;
+use Illuminate\Http\Request;
 use App\Http\Requests\V1\StoreBookingRequest;
 use App\Http\Requests\V1\UpdateBookingRequest;
+use App\Http\Resources\V1\BookingCollection;
+use App\Http\Resources\V1\BookingResource;
 
 class BookingController extends Controller
 {
@@ -15,19 +19,16 @@ class BookingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        $filter = new BookingFilter();
+        $filterItems = $filter->transform($request); // [['column','operator','value']]
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        if (count($filterItems) == 0) {
+            return new BookingCollection(Booking::all());
+        } else {
+            return new BookingCollection(Booking::where($filterItems)->get());
+        }
     }
 
     /**
@@ -38,7 +39,9 @@ class BookingController extends Controller
      */
     public function store(StoreBookingRequest $request)
     {
-        //
+        $createData = Booking::create($request->all());
+
+        return $createData->id;
     }
 
     /**
@@ -49,18 +52,7 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Booking  $booking
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Booking $booking)
-    {
-        //
+        return new BookingResource($booking);
     }
 
     /**
@@ -72,7 +64,13 @@ class BookingController extends Controller
      */
     public function update(UpdateBookingRequest $request, Booking $booking)
     {
-        //
+        $booking->update($request->all());
+
+        if ($booking->wasChanged()) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     /**
@@ -83,6 +81,12 @@ class BookingController extends Controller
      */
     public function destroy(Booking $booking)
     {
-        //
+        $deleteData = $booking->delete();
+
+        if ($deleteData) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

@@ -27,4 +27,6 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
     Route::apiResource('parking_slot_statuses', ParkingSlotStatusController::class);
     Route::apiResource('payments', PaymentController::class);
     Route::apiResource('payment_statuses', PaymentStatusController::class);
+    Route::apiResource('bookings', BookingController::class);
+    Route::apiResource('booking_statuses', BookingStatusController::class);
 });

@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\BookingStatus;
 use App\Http\Requests\V1\StoreBookingStatusRequest;
 use App\Http\Requests\V1\UpdateBookingStatusRequest;
+use App\Http\Resources\V1\BookingStatusCollection;
+use App\Http\Resources\V1\BookingStatusResource;
 
 class BookingStatusController extends Controller
 {
@@ -17,17 +19,7 @@ class BookingStatusController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return new BookingStatusCollection(BookingStatus::all());
     }
 
     /**
@@ -49,18 +41,7 @@ class BookingStatusController extends Controller
      */
     public function show(BookingStatus $bookingStatus)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\BookingStatus  $bookingStatus
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(BookingStatus $bookingStatus)
-    {
-        //
+        return new BookingStatusResource($bookingStatus);
     }
 
     /**

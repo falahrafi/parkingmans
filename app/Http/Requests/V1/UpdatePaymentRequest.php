@@ -3,6 +3,7 @@
 namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdatePaymentRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class UpdatePaymentRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +24,37 @@ class UpdatePaymentRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        $method = $this->method();
+
+        if ($method == "PUT") {
+            return [
+                'bookingId' => ['required'],
+                'amount' => ['required'],
+                'method' => ['required', Rule::in(['Credit Card', 'Bank Transfers', 'Cash'])],
+                'statusId' => ['required', Rule::in([0, 1, 2, 3])],
+                'notes' => [],
+                'paidBy' => ['required'],
+                'paidDate' => ['required'],
+            ];
+        } else {
+            // PATCH
+            return [
+                'bookingId' => ['sometimes', 'required'],
+                'amount' => ['sometimes', 'required'],
+                'method' => ['sometimes', 'required', Rule::in(['Credit Card', 'Bank Transfers', 'Cash'])],
+                'statusId' => ['sometimes', 'required', Rule::in([0, 1, 2, 3])],
+                'notes' => [],
+                'paidBy' => ['sometimes', 'required'],
+                'paidDate' => ['sometimes', 'required'],
+            ];
+        }
+    }
+
+    protected function prepareForValidation()
+    {
+        if (isset($this->bookingId)) $this->merge(['booking_id' => $this->bookingId]);
+        if (isset($this->statusId)) $this->merge(['status_id' => $this->statusId]);
+        if (isset($this->paidBy)) $this->merge(['paid_by' => $this->paidBy]);
+        if (isset($this->paidDate)) $this->merge(['paid_date' => $this->paidDate]);
     }
 }
