@@ -12,6 +12,8 @@ use App\Http\Resources\V1\VehicleResource;
 use App\Http\Resources\V1\VehicleCollection;
 use App\Filters\V1\VehicleFilter;
 
+use function PHPUnit\Framework\isNull;
+
 class VehicleController extends Controller
 {
     /**
@@ -44,6 +46,8 @@ class VehicleController extends Controller
         // UPLOAD
         if (is_string($request->image)) {
             // do nothing
+        } else if (isNull($request->image)) {
+            $data['image'] = 'image.jpg';
         } else {
             $imageName = time() . '.' . $request->image->extension();
             $data['image'] = $imageName;
@@ -81,6 +85,8 @@ class VehicleController extends Controller
         // UPLOAD
         if (is_string($request->image)) {
             $data['image'] = $oldImage;
+        } else if (isNull($request->image)) {
+            $data['image'] = 'image.jpg';
         } else {
             $imageName = time() . '.' . $request->image->extension();
             $data['image'] = $imageName;

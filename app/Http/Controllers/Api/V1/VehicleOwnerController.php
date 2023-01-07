@@ -13,6 +13,8 @@ use App\Http\Resources\V1\VehicleOwnerResource;
 use App\Http\Resources\V1\VehicleOwnerCollection;
 use App\Filters\V1\VehicleOwnerFilter;
 
+use function PHPUnit\Framework\isNull;
+
 class VehicleOwnerController extends Controller
 {
     /**
@@ -45,6 +47,8 @@ class VehicleOwnerController extends Controller
         // UPLOAD
         if (is_string($request->avatar)) {
             // do nothing
+        } else if (isNull($request->avatar)) {
+            $data['avatar'] = 'avatar.jpg';
         } else {
             $imageName = time() . '.' . $request->avatar->extension();
             $data['avatar'] = $imageName;
@@ -87,6 +91,8 @@ class VehicleOwnerController extends Controller
         // UPLOAD
         if (is_string($request->avatar)) {
             $data['avatar'] = $oldAvatar;
+        } else if (isNull($request->avatar)) {
+            $data['avatar'] = 'avatar.jpg';
         } else {
             $imageName = time() . '.' . $request->avatar->extension();
             $data['avatar'] = $imageName;
