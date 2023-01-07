@@ -16,12 +16,13 @@ class VehicleFactory extends Factory
      */
     public function definition()
     {
+        $vC = $this->faker->numberBetween(1, 5);
         return [
-            'vehicle_category_id' => $this->faker->numberBetween(1, 5),
+            'vehicle_category_id' => $vC,
             'plate_number' => strtoupper($this->faker->bothify('? #### ???')),
             // 'plate_number' => $this->faker->policeNumber(),
             'description' => $this->faker->sentence(),
-            'image' => $this->faker->numerify('images/vehicles/######.jpg'),
+            'image' => 'v' . $vC . '.jpg',
             'vehicle_owner_id' => VehicleOwner::factory()
         ];
     }

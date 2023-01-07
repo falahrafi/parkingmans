@@ -41,6 +41,17 @@ class VehicleOwnerController extends Controller
     public function store(StoreVehicleOwnerRequest $request)
     {
         $data = $request->all();
+
+        // UPLOAD
+        if (is_string($request->avatar)) {
+            // do nothing
+        } else {
+            $imageName = time() . '.' . $request->avatar->extension();
+            $data['avatar'] = $imageName;
+            $request->avatar->move(public_path('images'), $imageName);
+        }
+
+        // PASSWORD
         $data['password'] = Hash::make($request->password);
 
         $createData = VehicleOwner::create($data);
@@ -69,8 +80,20 @@ class VehicleOwnerController extends Controller
     public function update(UpdateVehicleOwnerRequest $request, VehicleOwner $vehicleOwner)
     {
         $oldPw = $vehicleOwner->password;
+        $oldAvatar = $vehicleOwner->avatar;
 
         $data = $request->all();
+
+        // UPLOAD
+        if (is_string($request->avatar)) {
+            $data['avatar'] = $oldAvatar;
+        } else {
+            $imageName = time() . '.' . $request->avatar->extension();
+            $data['avatar'] = $imageName;
+            $request->avatar->move(public_path('images'), $imageName);
+        }
+
+        // PASSWORD
         $data['password'] = Hash::make($request->password);
 
         $vehicleOwner->update($data);

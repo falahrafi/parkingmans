@@ -39,7 +39,7 @@ class UpdateVehicleOwnerRequest extends FormRequest
                         ->uncompromised()
                 ],
                 'fullname' => ['required'],
-                'avatar' => ['required'],
+                'avatar' => [''],
                 'contact' => ['required'],
                 'email' => ['required', 'email'],
             ];            
@@ -58,7 +58,7 @@ class UpdateVehicleOwnerRequest extends FormRequest
                         ->uncompromised()
                 ],
                 'fullname' => ['sometimes', 'required'],
-                'avatar' => ['sometimes', 'required'],
+                'avatar' => ['sometimes', ''],
                 'contact' => ['sometimes', 'required'],
                 'email' => ['sometimes', 'required', 'email'],
             ];    

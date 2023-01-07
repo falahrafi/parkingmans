@@ -40,7 +40,18 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $data = $request->all();
-        $data['password'] = Hash::make($request->password);
+
+        // UPLOAD
+        if (is_string($request->avatar)) {
+            // do nothing
+        } else {
+            $imageName = time() . '.' . $request->avatar->extension();
+            $data['avatar'] = $imageName;
+            $request->avatar->move(public_path('images'), $imageName);
+        }
+
+        // PASSWORD
+        $data['password'] = Hash::make($request->password);        
 
         $createData = User::create($data);
 
@@ -68,9 +79,21 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         $oldPw = $user->password;
+        $oldAvatar = $user->avatar;
 
         $data = $request->all();
-        $data['password'] = Hash::make($request->password);
+
+        // UPLOAD
+        if (is_string($request->avatar)) {
+            $data['avatar'] = $oldAvatar;
+        } else {
+            $imageName = time() . '.' . $request->avatar->extension();
+            $data['avatar'] = $imageName;
+            $request->avatar->move(public_path('images'), $imageName);
+        }
+
+        // PASSWORD
+        $data['password'] = Hash::make($request->password);        
 
         $user->update($data);
 

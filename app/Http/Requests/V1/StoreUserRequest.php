@@ -37,7 +37,7 @@ class StoreUserRequest extends FormRequest
                     ->uncompromised()
             ],
             'fullname' => ['required'],
-            'avatar' => ['required'],
+            'avatar' => [''],
             'contact' => ['required'],
             'email' => ['required', 'email'],
             'userLevel' => ['required', Rule::in([1, 2])]

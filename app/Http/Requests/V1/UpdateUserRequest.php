@@ -29,7 +29,7 @@ class UpdateUserRequest extends FormRequest
 
         if ($method == "PUT") {
             return [
-                'username' => ['required', 'unique:users'],
+                'username' => ['required'],
                 'password' => [
                     'required',
                     Password::min(8)
@@ -40,7 +40,7 @@ class UpdateUserRequest extends FormRequest
                         ->uncompromised()
                 ],
                 'fullname' => ['required'],
-                'avatar' => ['required'],
+                'avatar' => [''],
                 'contact' => ['required'],
                 'email' => ['required', 'email'],
                 'userLevel' => ['required', Rule::in([1, 2])]
@@ -48,7 +48,7 @@ class UpdateUserRequest extends FormRequest
         } else {
             // PATCH
             return [
-                'username' => ['sometimes', 'required', 'unique:users'],
+                'username' => ['sometimes', 'required'],
                 'password' => [
                     'sometimes',
                     'required',
@@ -60,7 +60,7 @@ class UpdateUserRequest extends FormRequest
                         ->uncompromised()
                 ],
                 'fullname' => ['sometimes', 'required'],
-                'avatar' => ['sometimes', 'required'],
+                'avatar' => ['sometimes', ''],
                 'contact' => ['sometimes', 'required'],
                 'email' => ['sometimes', 'required', 'email'],
                 'userLevel' => ['sometimes', 'required', Rule::in([1, 2])]

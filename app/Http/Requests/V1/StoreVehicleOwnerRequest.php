@@ -36,7 +36,7 @@ class StoreVehicleOwnerRequest extends FormRequest
                     ->uncompromised()
             ],
             'fullname' => ['required'],
-            'avatar' => ['required'],
+            'avatar' => [''],
             'contact' => ['required'],
             'email' => ['required', 'email'],
         ];

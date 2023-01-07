@@ -17,7 +17,7 @@ class VehicleOwnerFactory extends Factory
             'username' => $this->faker->userName(),
             'password' => $this->faker->password(),
             'fullname' => $this->faker->name(),
-            'avatar' => $this->faker->numerify('images/avatar/######.jpg'),
+            'avatar' => $this->faker->numberBetween(1, 55) . '.jpg',
             'contact' => $this->faker->numerify('08##########'),
             'email' => $this->faker->freeEmail()
         ];

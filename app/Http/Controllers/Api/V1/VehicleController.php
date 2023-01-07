@@ -39,7 +39,18 @@ class VehicleController extends Controller
      */
     public function store(StoreVehicleRequest $request)
     {
-        $createData = Vehicle::create($request->all());
+        $data = $request->all();
+
+        // UPLOAD
+        if (is_string($request->image)) {
+            // do nothing
+        } else {
+            $imageName = time() . '.' . $request->image->extension();
+            $data['image'] = $imageName;
+            $request->image->move(public_path('images'), $imageName);
+        }
+
+        $createData = Vehicle::create($data);        
 
         return $createData->id;
     }
@@ -64,7 +75,19 @@ class VehicleController extends Controller
      */
     public function update(UpdateVehicleRequest $request, Vehicle $vehicle)
     {
-        $vehicle->update($request->all());
+        $data = $request->all();
+        $oldImage = $vehicle->image;
+
+        // UPLOAD
+        if (is_string($request->image)) {
+            $data['image'] = $oldImage;
+        } else {
+            $imageName = time() . '.' . $request->image->extension();
+            $data['image'] = $imageName;
+            $request->image->move(public_path('images'), $imageName);
+        }
+
+        $vehicle->update($data);
 
         if ($vehicle->wasChanged()) {
             return 1;

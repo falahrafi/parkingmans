@@ -28,7 +28,7 @@ class StoreVehicleRequest extends FormRequest
             'vehicleCategoryId' => ['required', Rule::in([1,2,3,4,5])],
             'plateNumber' => ['required'],
             'description' => [],
-            'image' => ['required'],
+            'image' => [''],
             'vehicleOwnerId' => ['required'], // Need to add unique later
         ];
     }

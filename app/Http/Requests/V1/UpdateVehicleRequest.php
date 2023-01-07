@@ -31,7 +31,7 @@ class UpdateVehicleRequest extends FormRequest
                 'vehicleCategoryId' => ['required', Rule::in([1, 2, 3, 4, 5])],
                 'plateNumber' => ['required'],
                 'description' => [],
-                'image' => ['required'],
+                'image' => [''],
                 'vehicleOwnerId' => ['required'], // Need to add unique later
             ];
         } else {
@@ -40,7 +40,7 @@ class UpdateVehicleRequest extends FormRequest
                 'vehicleCategoryId' => ['sometimes', 'required', Rule::in([1, 2, 3, 4, 5])],
                 'plateNumber' => ['sometimes', 'required'],
                 'description' => [],
-                'image' => ['sometimes', 'required'],
+                'image' => ['sometimes', ''],
                 'vehicleOwnerId' => ['sometimes', 'required'], // Need to add unique later
             ];
         }
